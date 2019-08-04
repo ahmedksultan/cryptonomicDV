@@ -3,12 +3,12 @@ const serverInfo = {
     apiKey: 'hooman'
 };
 
-/*
+/* mainnet
 const serverInfo = {
     url: 'https://conseil-prod.cryptonomic-infra.tech:443',
     apiKey: 'galleon'
 };
-*/
+*/ 
 
 async function getOperations(network, query) {
     const blocks = await conseiljs.TezosConseilClient.getOperations(serverInfo, network, query);
@@ -18,23 +18,24 @@ async function getOperations(network, query) {
 function output(blocks = []) {
     var myMap = new Map();
     blocks.map((block, index) => {
-        var time = new Date(block.timestamp).toLocaleString().substring(0, 8);
+        var time = new Date(block.timestamp);
+        var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        var time = time.toLocaleDateString("en-US", options);
         var amnt = block.amount;
-        var level = block.block_level
 
         if (myMap.has(time)) {
             myMap.set(time, myMap.get(time) + (amnt / 1000000.0));
         } else {
             myMap.set(time, (amnt / 1000000.0));
         }
-        document.writeln('(' + level + ') ' + amnt + ' ' + time + ' / ' );
     });
-    console.log(myMap);
+    console.log(myMap)
 }
 
 function onClickGo() {
     let amountQuery = conseiljs.ConseilQueryBuilder.blankQuery();
-    amountQuery = conseiljs.ConseilQueryBuilder.addFields(amountQuery, 'block_level', 'timestamp', 'amount');
+    amountQuery = conseiljs.ConseilQueryBuilder.addFields(amountQuery, 'timestamp', 'amount');
+    
     // 1561953600000,1564632000000 (july 1 - august 1)
     amountQuery = conseiljs.ConseilQueryBuilder.addPredicate(amountQuery, 'timestamp', conseiljs.ConseilOperator.BETWEEN, [1561953600000, 1564632000000], false);
     amountQuery = conseiljs.ConseilQueryBuilder.addPredicate(amountQuery, 'kind', conseiljs.ConseilOperator.EQ, ["transaction"], false);
@@ -59,3 +60,19 @@ async function fetchMetadata() {
 document.onreadystatechange = () => {
     if (document.readyState === 'complete') { fetchMetadata(); }
 }
+
+//canvas is an SVG file in which the calendar is drawn
+var canvas = d3.select("body").append("svg")
+    .attr("width", 400)
+    .attr("height", 310)
+
+//myColor is a pre-made palette from COLORBREW that is compatible with d3
+var myColor = d3.scale.quantize()
+    .range(colorbrewer.Blues[9])
+    .domain([0, 10]);
+
+//colors canvas #F0F0F0 to ensure better visibility
+canvas.append("rect")
+    .attr("width", "100%")
+    .attr("height", "100%")
+    .attr("fill", "#F0F0F0");
