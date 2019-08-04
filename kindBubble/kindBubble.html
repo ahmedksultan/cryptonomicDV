@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>(ꜩ) data 06/19</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+    <script src="http://d3js.org/colorbrewer.v1.min.js" charset="utf-8"></script>
+    <!-- <script src="calendar.js" type="module"></script> -->
+        <style>
+            svg {
+                margin-right: 2%;
+                margin-left: 2%;
+            }
+        </style>
+
+</head>
+
+<body>
+    <h1>operations on tezos (ꜩ) january-june 2019</h1>
+    <script type="text/javascript">
+        /* ---------- BUBBLE DATA VISUALIZATION FOR TEZOS ---------- */
+        //scope: January thru. June 2019 (all operations)
+
+        //colors for the bubbles
+        function myColor(name) {
+                switch (name) {
+                    case "endorsement":
+                        return "#2196F3";
+                        break;
+                    case "transaction":
+                        return "#f44336";
+                        break;
+                    case "activate_account":
+                        return "#9C27B0";
+                        break;
+                    case "reveal":
+                        return "#FF9800";
+                        break;
+                    case "origination":
+                        return "#FFC107";
+                        break;
+                    case "delegation":
+                        return "#8BC34A";
+                        break;
+                    case "seed_nonce_revelation":
+                        return "#00BCD4";
+                        break;
+                    case "proposals":
+                        return "#757575";
+                        break;
+                    case "double_baking_evidence":
+                        return "#607D8B";
+                        break;
+                    case "ballot":
+                        return "#F06292";
+                        break;
+                    default:
+                        return "#000000";
+                        break;
+                }
+            }
+        
+        var key = d3.select("body")
+                .append("svg")
+                .attr("width", 1200)
+                .attr("height", 50)
+
+        key.append("rect")
+            .attr("height", 10)
+            .attr("width", 10)
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("fill", "#2196F3")
+        
+        key.append("text")
+            .text("endorsement")
+            .attr("x", 15)
+            .attr("y", 10)
+            .style("font-size", "12")
+
+        key.append("rect")
+                .attr("height", 10)
+                .attr("width", 10)
+                .attr("x", 110)
+                .attr("y", 0)
+                .attr("fill", "#f44336")
+
+        key.append("text")
+                .text("transaction")
+                .attr("x", 125)
+                .attr("y", 10)
+                .style("font-size", "12")
+        
+        key.append("rect")
+                .attr("height", 10)
+                .attr("width", 10)
+                .attr("x", 210)
+                .attr("y", 0)
+                .attr("fill", "#FFC107")
+
+        key.append("text")
+                .text("origination")
+                .attr("x", 225)
+                .attr("y", 10)
+                .style("font-size", "12")
+
+        key.append("rect")
+                .attr("height", 10)
+                .attr("width", 10)
+                .attr("x", 310)
+                .attr("y", 0)
+                .attr("fill", "#9C27B0")
+
+        key.append("text")
+                .text("activate_account")
+                .attr("x", 325)
+                .attr("y", 10)
+                .style("font-size", "12")
+        
+        key.append("rect")
+                .attr("height", 10)
+                .attr("width", 10)
+                .attr("x", 440)
+                .attr("y", 0)
+                .attr("fill", "#FF9800")
+
+        key.append("text")
+                .text("reveal")
+                .attr("x", 455)
+                .attr("y", 10)
+                .style("font-size", "12")
+        
+        key.append("rect")
+                .attr("height", 10)
+                .attr("width", 10)
+                .attr("x", 510)
+                .attr("y", 0)
+                .attr("fill", "#8BC34A")
+
+        key.append("text")
+                .text("delegation")
+                .attr("x", 525)
+                .attr("y", 10)
+                .style("font-size", "12")
+        
+        key.append("rect")
+                .attr("height", 10)
+                .attr("width", 10)
+                .attr("x", 610)
+                .attr("y", 0)
+                .attr("fill", "#757575")
+
+        key.append("text")
+                .text("proposals")
+                .attr("x", 625)
+                .attr("y", 10)
+                .style("font-size", "12")
+
+        key.append("rect")
+                .attr("height", 10)
+                .attr("width", 10)
+                .attr("x", 710)
+                .attr("y", 0)
+                .attr("fill", "#F06292")
+
+        key.append("text")
+                .text("ballot")
+                .attr("x", 725)
+                .attr("y", 10)
+                .style("font-size", "12")
+
+        key.append("rect")
+                .attr("height", 10)
+                .attr("width", 10)
+                .attr("x", 780)
+                .attr("y", 0)
+                .attr("fill", "#00BCD4")
+
+        key.append("text")
+                .text("seed_nonce_revelation")
+                .attr("x", 795)
+                .attr("y", 10)
+                .style("font-size", "12")
+
+        key.append("rect")
+                .attr("height", 10)
+                .attr("width", 10)
+                .attr("x", 950)
+                .attr("y", 0)
+                .attr("fill", "#607D8B")
+
+            key.append("text")
+                .text("double_baking_evidence")
+                .attr("x", 965)
+                .attr("y", 10)
+                .style("font-size", "12")
+
+        /* ---------- JAN ---------- */
+
+        var datasetJAN = {
+            "children": [
+                { "kind": "endorsement", "count": 943152 },
+                { "kind": "transaction", "count": 78593 },
+                { "kind": "activate_account", "count": 401 },
+                { "kind": "reveal", "count": 2710 },
+                { "kind": "origination", "count": 846 },
+                { "kind": "delegation", "count": 1006 },
+                { "kind": "seed_nonce_revelation", "count": 1270 }]
+        };
+
+        var diameter = 600; 
+
+        var bubble = d3.pack(datasetJAN)
+            .size([diameter, diameter])
+            .padding(1.5);
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", diameter)
+            .attr("height", diameter)
+            .attr("class", "bubble");
+
+        var nodes = d3.hierarchy(datasetJAN)
+            .sum(function (d) { return d.count; });
+
+        var node = svg.selectAll(".node")
+            .data(bubble(nodes).descendants())
+            .enter()
+            .filter(function (d) {
+                return !d.children
+            })
+            .append("g")
+            .attr("class", "node")
+            .attr("transform", function (d) {
+                return "translate(" + d.x + "," + d.y + ")";
+            });
+
+        node.append("title")
+            .text(function (d) {
+                return d.kind + ": " + d.count;
+            });
+
+        node.append("circle")
+            .attr("r", function (d) {
+                return d.r;
+            })
+            .style("fill", function (d, i) {
+                return myColor(d.data.kind);
+            })
+            .append("svg:title");
+            
+        
+        svg.append("text")
+                .text("JAN")
+                .attr("x", 235)
+                .attr("y", 40)
+                .attr("fill", "black")
+            
+        /*
+            node.append("text")
+                .attr("dy", ".2em")
+                .style("text-anchor", "middle")
+                .text(function (d) {
+                    return d.data.kind.substring(0, d.r / 3);
+                })
+                .attr("font-family", "sans-serif")
+                .attr("font-size", function (d) {
+                    return 10;
+                })
+                .attr("fill", "white");
+            */
+
+            node.append("text")
+                .attr("dx", "1em")
+                .style("text-anchor", "middle")
+                .text(function (d) {
+                    return d.data.count;
+                })
+                .style("font-size", 10)
+                .style("font-style", "italic")
+                .attr("fill", "black");
+            
+
+        /* ---------- FEB ---------- */
+
+        var datasetFEB = {
+            "children": [
+                { "kind": "endorsement", "count": 877412 },
+                { "kind": "transaction", "count": 80945 },
+                { "kind": "activate_account", "count": 384 },
+                { "kind": "reveal", "count": 2261 },
+                { "kind": "origination", "count": 689 },
+                { "kind": "delegation", "count": 896 },
+                { "kind": "seed_nonce_revelation", "count": 1271 },
+                { "kind": "double_baking_evidence", "count": 31},
+                { "kind": "proposals", "count": 6}]
+        };
+
+        var diameter = 600;
+
+            var bubble = d3.pack(datasetFEB)
+                .size([diameter, diameter])
+                .padding(1.5);
+
+            var svg = d3.select("body")
+                .append("svg")
+                .attr("width", diameter)
+                .attr("height", diameter)
+                .attr("class", "bubble");
+
+            var nodes = d3.hierarchy(datasetFEB)
+                .sum(function (d) { return d.count; });
+
+            var node = svg.selectAll(".node")
+                .data(bubble(nodes).descendants())
+                .enter()
+                .filter(function (d) {
+                    return !d.children
+                })
+                .append("g")
+                .attr("class", "node")
+                .attr("transform", function (d) {
+                    return "translate(" + d.x + "," + d.y + ")";
+                });
+
+            node.append("title")
+                .text(function (d) {
+                    return d.kind + ": " + d.count;
+                });
+
+            node.append("circle")
+                .attr("r", function (d) {
+                    return d.r;
+                })
+                .style("fill", function (d, i) {
+                    return myColor(d.data.kind);
+                });
+            
+            svg.append("text")
+                    .text("FEB")
+                    .attr("x", 235)
+                    .attr("y", 40)
+                    .attr("text-anchor", "middle")
+                    .attr("fill", "black")
+        
+        node.append("text")
+                .attr("dx", "1em")
+                .style("text-anchor", "middle")
+                .text(function (d) {
+                    return d.data.count;
+                })
+                .style("font-size", 10)
+                .style("font-style", "italic")
+                .attr("fill", "black");
+
+        /* ---------- MAR ---------- */
+
+        var datasetMAR = {
+                "children": [
+                    { "kind": "endorsement", "count": 982868 },
+                    { "kind": "transaction", "count": 96098 },
+                    { "kind": "activate_account", "count": 822 },
+                    { "kind": "reveal", "count": 4622 },
+                    { "kind": "origination", "count": 1430 },
+                    { "kind": "delegation", "count": 1669 },
+                    { "kind": "seed_nonce_revelation", "count": 1275 },
+                    { "kind": "ballot", "count": 132 },
+                    { "kind": "proposals", "count": 166 }]
+            };
+        
+        var diameter = 600;
+
+            var bubble = d3.pack(datasetMAR)
+                .size([diameter, diameter])
+                .padding(1.5);
+
+            var svg = d3.select("body")
+                .append("svg")
+                .attr("width", diameter)
+                .attr("height", diameter)
+                .attr("class", "bubble");
+
+            var nodes = d3.hierarchy(datasetMAR)
+                .sum(function (d) { return d.count; });
+
+            var node = svg.selectAll(".node")
+                .data(bubble(nodes).descendants())
+                .enter()
+                .filter(function (d) {
+                    return !d.children
+                })
+                .append("g")
+                .attr("class", "node")
+                .attr("transform", function (d) {
+                    return "translate(" + d.x + "," + d.y + ")";
+                });
+
+            node.append("title")
+                .text(function (d) {
+                    return d.kind + ": " + d.count;
+                });
+
+            node.append("circle")
+                .attr("r", function (d) {
+                    return d.r;
+                })
+                .style("fill", function (d, i) {
+                    return myColor(d.data.kind);
+                });
+            
+        svg.append("text")
+                .text("MAR")
+                .attr("x", 235)
+                .attr("y", 40)
+                .attr("text-anchor", "middle")
+                .attr("fill", "black")
+        
+        node.append("text")
+                .attr("dx", "1em")
+                .style("text-anchor", "middle")
+                .text(function (d) {
+                    return d.data.count;
+                })
+                .style("font-size", 10)
+                .style("font-style", "italic")
+                .attr("fill", "black");
+
+        /* ---------- APR ---------- */
+
+        var datasetAPR = {
+                "children": [
+                    { "kind": "endorsement", "count": 955072 },
+                    { "kind": "transaction", "count": 117956 },
+                    { "kind": "activate_account", "count": 1038 },
+                    { "kind": "reveal", "count": 6637 },
+                    { "kind": "origination", "count": 2352 },
+                    { "kind": "delegation", "count": 2317 },
+                    { "kind": "seed_nonce_revelation", "count": 1402 },
+                    { "kind": "ballot", "count": 62 },
+            ]};
+        
+        var diameter = 600;
+
+            var bubble = d3.pack(datasetAPR)
+                .size([diameter, diameter])
+                .padding(1.5);
+
+            var svg = d3.select("body")
+                .append("svg")
+                .attr("width", diameter)
+                .attr("height", diameter)
+                .attr("class", "bubble");
+
+            var nodes = d3.hierarchy(datasetAPR)
+                .sum(function (d) { return d.count; });
+
+            var node = svg.selectAll(".node")
+                .data(bubble(nodes).descendants())
+                .enter()
+                .filter(function (d) {
+                    return !d.children
+                })
+                .append("g")
+                .attr("class", "node")
+                .attr("transform", function (d) {
+                    return "translate(" + d.x + "," + d.y + ")";
+                });
+
+            node.append("title")
+                .text(function (d) {
+                    return d.kind + ": " + d.count;
+                });
+
+            node.append("circle")
+                .attr("r", function (d) {
+                    return d.r;
+                })
+                .style("fill", function (d, i) {
+                    return myColor(d.data.kind);
+                });
+        
+        svg.append("text")
+                .text("APR")
+                .attr("x", 235)
+                .attr("y", 40)
+                .attr("text-anchor", "middle")
+                .attr("fill", "black")
+
+        node.append("text")
+                .attr("dx", "1em")
+                .style("text-anchor", "middle")
+                .text(function (d) {
+                    return d.data.count;
+                })
+                .style("font-size", 10)
+                .style("font-style", "italic")
+                .attr("fill", "black");
+        
+        /* ---------- MAY ---------- */
+
+        var datasetMAY = {
+                "children": [
+                    { "kind": "endorsement", "count": 987891 },
+                    { "kind": "transaction", "count": 120606 },
+                    { "kind": "activate_account", "count": 871 },
+                    { "kind": "reveal", "count": 5570 },
+                    { "kind": "origination", "count": 1710 },
+                    { "kind": "delegation", "count": 2126 },
+                    { "kind": "seed_nonce_revelation", "count": 1251 },
+                    { "kind": "ballot", "count": 216 },
+                ]
+            };
+
+        var diameter = 600;
+
+            var bubble = d3.pack(datasetMAY)
+                .size([diameter, diameter])
+                .padding(1.5);
+
+            var svg = d3.select("body")
+                .append("svg")
+                .attr("width", diameter)
+                .attr("height", diameter)
+                .attr("class", "bubble");
+
+            var nodes = d3.hierarchy(datasetMAY)
+                .sum(function (d) { return d.count; });
+
+            var node = svg.selectAll(".node")
+                .data(bubble(nodes).descendants())
+                .enter()
+                .filter(function (d) {
+                    return !d.children
+                })
+                .append("g")
+                .attr("class", "node")
+                .attr("transform", function (d) {
+                    return "translate(" + d.x + "," + d.y + ")";
+                });
+
+            node.append("title")
+                .text(function (d) {
+                    return d.kind + ": " + d.count;
+                });
+
+            node.append("circle")
+                .attr("r", function (d) {
+                    return d.r;
+                })
+                .style("fill", function (d, i) {
+                    return myColor(d.data.kind);
+                });
+
+        svg.append("text")
+                .text("MAY")
+                .attr("x", 235)
+                .attr("y", 40)
+                .attr("text-anchor", "middle")
+                .attr("fill", "black")
+
+        node.append("text")
+                .attr("dx", "1em")
+                .style("text-anchor", "middle")
+                .text(function (d) {
+                    return d.data.count;
+                })
+                .style("font-size", 10)
+                .style("font-style", "italic")
+                .attr("fill", "black");
+
+        /* ---------- JUN ---------- */
+
+        var datasetJUN = {
+                "children": [
+                    { "kind": "endorsement", "count": 950032 },
+                    { "kind": "transaction", "count": 130738 },
+                    { "kind": "activate_account", "count": 1176 },
+                    { "kind": "reveal", "count": 5842 },
+                    { "kind": "origination", "count": 1796 },
+                    { "kind": "delegation", "count": 1456 },
+                    { "kind": "seed_nonce_revelation", "count": 1156 },
+                    { "kind": "ballot", "count": 16 },
+                    { "kind": "proposals", "count": 7}
+                ]
+            };
+        
+        var diameter = 600;
+
+            var bubble = d3.pack(datasetJUN)
+                .size([diameter, diameter])
+                .padding(1.5);
+
+            var svg = d3.select("body")
+                .append("svg")
+                .attr("width", diameter)
+                .attr("height", diameter)
+                .attr("class", "bubble");
+
+            var nodes = d3.hierarchy(datasetJUN)
+                .sum(function (d) { return d.count; });
+
+            var node = svg.selectAll(".node")
+                .data(bubble(nodes).descendants())
+                .enter()
+                .filter(function (d) {
+                    return !d.children
+                })
+                .append("g")
+                .attr("class", "node")
+                .attr("transform", function (d) {
+                    return "translate(" + d.x + "," + d.y + ")";
+                });
+
+            node.append("title")
+                .text(function (d) {
+                    return d.kind + ": " + d.count;
+                });
+
+            node.append("circle")
+                .attr("r", function (d) {
+                    return d.r;
+                })
+                .style("fill", function (d, i) {
+                    return myColor(d.data.kind);
+                });
+
+        svg.append("text")
+                .text("JUN")
+                .attr("x", 235)
+                .attr("y", 40)
+                .attr("text-anchor", "middle")
+                .attr("fill", "black")
+
+        node.append("text")
+                .attr("dx", "1em")
+                .style("text-anchor", "middle")
+                .text(function (d) {
+                    return d.data.count;
+                })
+                .style("font-size", 10)
+                .style("font-style", "italic")
+                .attr("fill", "black");
+            
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+h1 {
+    font-family: sans-serif;
+    color: dodgerblue;
+    margin-left: 15px;
+    padding: 0px;
+}
+
+h3 {
+    font-family: sans-serif;
+    color: dodgerblue;
+    margin-left: 15px;
+    padding: 0px;
+    float: left;
+}
+
+body {
+    background: #F0F0F0;
+}
+
+svg {
+    margin-left: 15px;
+}
+
+br {
+    float: left;
+}
+
+svg text {
+    font-family: sans-serif;
+    font-weight: bold;
+    color: white;
+    font-size: 20px;
+}

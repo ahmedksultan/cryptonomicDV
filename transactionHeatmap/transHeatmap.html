@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>(ꜩ) transaction data 01-06/19</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="http://d3js.org/colorbrewer.v1.min.js" charset="utf-8"></script>
+    <!-- <script src="calendar.js" type="module"></script> -->
+</head>
+
+<body>
+    <h1>tezos (ꜩ) transactions (january—june 2019)</h1>
+    <script type="text/javascript">
+        /* ---------- HEATMAP DATA VISUALIZATION FOR TEZOS ---------- */
+        //scope: January thru. June 2019 (transactions only)
+
+        /* ---------- JUNE ---------- */
+        var juneMap = new Map();
+        juneMap = {
+            '2019-06-30': 4702202.28838,
+            '2019-06-29': 6237951.738699998,
+            '2019-06-28': 9852.82361,
+            '2019-06-27': 211360.04515999992,
+            '2019-06-26': 200670.37486999997,
+            '2019-06-25': 2539950.5547500043,
+            '2019-06-24': 82636060.24096,
+            '2019-06-23': 2136.64667,
+            '2019-06-22': 7379.317580000001,
+            '2019-06-21': 26747.304409999997,
+            '2019-06-20': 4332847.500469999,
+            '2019-06-19': 112702.31087,
+            '2019-06-18': 1840.02,
+            '2019-06-17': 231.00104000000002,
+            '2019-06-16': 1536753.4444,
+            '2019-06-15': 120292.24501,
+            '2019-06-14': 948393.34948,
+            '2019-06-13': 20031014.87740001,
+            '2019-06-12': 1884406.9750300006,
+            '2019-06-11': 26246.091900000003,
+            '2019-06-10': 801093.2231099968,
+            '2019-06-09': 1558.04734,
+            '2019-06-08': 2144.2543400000004,
+            '2019-06-07': 2102.21991,
+            '2019-06-06': 509322.5772700003,
+            '2019-06-05': 24012.106709999985,
+            '2019-06-04': 20383.2487,
+            '2019-06-03': 193583.02276999998,
+            '2019-06-02': 1470.6242,
+            '2019-06-01': 1510.30033
+        }
+
+        //canvas is an SVG file in which the calendar is drawn
+        var canvas = d3.select("body").append("svg")
+            .attr("width", 400)
+            .attr("height", 310)
+
+        //myColor is a pre-made palette from colorbrew that uses d3 data
+        var myColor = d3.scale.quantize()
+            .range(colorbrewer.Blues[9])
+            .domain([0, 10]);
+
+        // !! CREATING THE DATASET
+        //the dataset is an array consisting of all the #s in the map
+        var dataset = [];
+        var date = 1;
+
+        while (date < 31) {
+            var myAmount;
+
+            if (date < 10) {
+                //myAmount = myMap.get('2019-06-0' + date);
+                myAmount = juneMap['2019-06-0' + date];
+            } else {
+                //myAmount = myMap.get('2019-06-' + date);
+                myAmount = juneMap['2019-06-' + date];
+            }
+
+            dataset.push(myAmount);
+            date++;
+        }
+
+        //this is coloring the canvas
+        canvas.append("rect")
+            .attr("width", "100%")
+            .attr("height", "100%")
+            .attr("fill", "#F0F0F0");
+
+        //creates rectangles for all #s in the dataset
+        var rectangles = canvas.selectAll(".rectangles")
+            .data(dataset)
+            .enter()
+            .append("rect");
+
+        //xCor/aCor and yCor/bCor track day of week, and # of week
+        //(i.e. June 1st is 6, 0 (Saturday), june 2nd is 0, 1 etc.)
+        //starting off one less than actual because of the way the functions work & return
+        var xCor = 5;
+        var yCor = 0;
+
+        var aCor = 5;
+        var bCor = 0;
+
+        rectangles
+            .attr("x", function (d) {
+                xCor++;
+                if (xCor == 7) {
+                    xCor = 0;
+                    yCor++;
+                }
+                console.log(xCor + " " + yCor)
+                return 15 + (xCor * 50);
+            })
+            .attr("y", function (d) {
+                aCor++;
+                if (aCor == 7) {
+                    aCor = 0;
+                    bCor++;
+                }
+                return 15 + (bCor * 50);
+            })
+            .attr("height", 40)
+            .attr("width", 40)
+            .attr("fill", function (d) {
+                return myColor((d / 1000000) * 10)
+            });
+
+        canvas.append("text")
+            .text("JUN")
+            .attr("x", 15)
+            .attr("y", 45)
+            .attr("fill", "dodgerblue")
+
+        /* ---------- MAY ---------- */
+
+        var mayMap = new Map();
+        mayMap = {
+            '2019-05-31': 357129.75412,
+            '2019-05-30': 1721980.973790001,
+            '2019-05-29': 1797007.2743599997,
+            '2019-05-28': 292251.3175,
+            '2019-05-27': 1498435.8926799998,
+            '2019-05-26': 109684.67118,
+            '2019-05-25': 2332.09007,
+            '2019-05-24': 393383.15619,
+            '2019-05-23': 914419.78411,
+            '2019-05-22': 2304837.9824500037,
+            '2019-05-21': 742261.6691199932,
+            '2019-05-20': 66205.92406999989,
+            '2019-05-19': 24762.690390000003,
+            '2019-05-18': 2104.09216,
+            '2019-05-17': 75152.05364000001,
+            '2019-05-16': 275353.5317400001,
+            '2019-05-15': 130652.72995,
+            '2019-05-14': 503331.62805,
+            '2019-05-13': 10590.387929999999,
+            '2019-05-12': 20585.48558999997,
+            '2019-05-11': 227312.24682,
+            '2019-05-10': 49259.74141000001,
+            '2019-05-09': 502954.26186999993,
+            '2019-05-08': 93480.95757999996,
+            '2019-05-07': 754561.5010899992,
+            '2019-05-06': 35339.90727999999,
+            '2019-05-05': 38778.73270000001,
+            '2019-05-04': 7169.18393,
+            '2019-05-03': 225217.9948400496,
+            '2019-05-02': 69650.86387999807,
+            '2019-05-01': 199044.04991000003
+        }
+
+        //canvas is an SVG file in which the calendar is drawn
+        var canvas = d3.select("body").append("svg")
+            .attr("width", 400)
+            .attr("height", 310)
+
+        //myColor is a pre-made palette from colorbrew that uses d3 data
+        var myColor = d3.scale.quantize()
+            .range(colorbrewer.Blues[9])
+            .domain([0, 10]);
+
+        // !! CREATING THE DATASET
+        //the dataset is an array consisting of all the #s in the map
+        var dataset = [];
+        var date = 1;
+
+        while (date < 32) {
+            var myAmount;
+
+            if (date < 10) {
+                myAmount = mayMap['2019-05-0' + date];
+            } else {
+                myAmount = mayMap['2019-05-' + date];
+            }
+
+            dataset.push(myAmount);
+            date++;
+        }
+
+        //this is coloring the canvas
+        canvas.append("rect")
+            .attr("width", "100%")
+            .attr("height", "100%")
+            .attr("fill", "#F0F0F0");
+
+        //creates rectangles for all #s in the dataset
+        var rectangles = canvas.selectAll(".rectangles")
+            .data(dataset)
+            .enter()
+            .append("rect");
+
+        //xCor/aCor and yCor/bCor track day of week, and # of week
+        //(i.e. June 1st is 6, 0 (Saturday), june 2nd is 0, 1 etc.)
+        //starting off one less than actual because of the way the functions work & return
+        var xCor = 2;
+        var yCor = 0;
+
+        var aCor = 2;
+        var bCor = 0;
+
+        rectangles
+            .attr("x", function (d) {
+                xCor++;
+                if (xCor == 7) {
+                    xCor = 0;
+                    yCor++;
+                }
+                console.log(xCor + " " + yCor)
+                return 15 + (xCor * 50);
+            })
+            .attr("y", function (d) {
+                aCor++;
+                if (aCor == 7) {
+                    aCor = 0;
+                    bCor++;
+                }
+                return 15 + (bCor * 50);
+            })
+            .attr("height", 40)
+            .attr("width", 40)
+            .attr("fill", function (d) {
+                return myColor((d / 1000000) * 10)
+            });
+
+        canvas.append("text")
+            .text("MAY")
+            .attr("x", 15)
+            .attr("y", 45)
+            .attr("fill", "dodgerblue")
+
+        /* ---------- APRIL ---------- */
+
+        var aprilMap = new Map();
+        aprilMap = {
+            '2019-04-30': 97616.45725,
+            '2019-04-29': 25447.151599999997,
+            '2019-04-28': 4026944.8114100005,
+            '2019-04-27': 18257.156799999986,
+            '2019-04-26': 44330.15658000008,
+            '2019-04-25': 186062.85710000002,
+            '2019-04-24': 132524.97099,
+            '2019-04-23': 611163.2527600001,
+            '2019-04-22': 10457.364389999997,
+            '2019-04-21': 14042.42785,
+            '2019-04-20': 257577.53850000066,
+            '2019-04-19': 842711.2701699998,
+            '2019-04-18': 385126.56237999984,
+            '2019-04-17': 52624.789979999994,
+            '2019-04-16': 194107.87913000004,
+            '2019-04-15': 1900573.8707900008,
+            '2019-04-14': 27415.161700000004,
+            '2019-04-13': 15310.359659999998,
+            '2019-04-12': 5930.33331,
+            '2019-04-11': 34103.35383,
+            '2019-04-10': 9148431.65191,
+            '2019-04-09': 598978.18466,
+            '2019-04-08': 411919.14349000005,
+            '2019-04-07': 119995,
+            '2019-04-06': 10400000,
+            '2019-04-05': 7655.6433099999995,
+            '2019-04-04': 21428.85368,
+            '2019-04-03': 12613809.360769998,
+            '2019-04-02': 2820,
+            '2019-04-01': 13320.5
+        }
+
+        //canvas is an SVG file in which the calendar is drawn
+        var canvas = d3.select("body").append("svg")
+            .attr("width", 400)
+            .attr("height", 310)
+
+        //myColor is a pre-made palette from colorbrew that uses d3 data
+        var myColor = d3.scale.quantize()
+            .range(colorbrewer.Blues[9])
+            .domain([0, 10]);
+
+        // !! CREATING THE DATASET
+        //the dataset is an array consisting of all the #s in the map
+        var dataset = [];
+        var date = 1;
+
+        while (date < 31) {
+            var myAmount;
+
+            if (date < 10) {
+                myAmount = aprilMap['2019-04-0' + date];
+            } else {
+                myAmount = aprilMap['2019-04-' + date];
+            }
+
+            dataset.push(myAmount);
+            date++;
+        }
+
+        //this is coloring the canvas
+        canvas.append("rect")
+            .attr("width", "100%")
+            .attr("height", "100%")
+            .attr("fill", "#F0F0F0");
+
+        //creates rectangles for all #s in the dataset
+        var rectangles = canvas.selectAll(".rectangles")
+            .data(dataset)
+            .enter()
+            .append("rect");
+
+        //xCor/aCor and yCor/bCor track day of week, and # of week
+        //(i.e. June 1st is 6, 0 (Saturday), june 2nd is 0, 1 etc.)
+        //starting off one less than actual because of the way the functions work & return
+        var xCor = 0;
+        var yCor = 0;
+
+        var aCor = 0;
+        var bCor = 0;
+
+        rectangles
+            .attr("x", function (d) {
+                xCor++;
+                if (xCor == 7) {
+                    xCor = 0;
+                    yCor++;
+                }
+                console.log(xCor + " " + yCor)
+                return 15 + (xCor * 50);
+            })
+            .attr("y", function (d) {
+                aCor++;
+                if (aCor == 7) {
+                    aCor = 0;
+                    bCor++;
+                }
+                return 15 + (bCor * 50);
+            })
+            .attr("height", 40)
+            .attr("width", 40)
+            .attr("fill", function (d) {
+                return myColor((d / 1000000) * 10)
+            });
+
+        canvas.append("text")
+            .text("APR")
+            .attr("x", 15)
+            .attr("y", 45)
+            .attr("fill", "dodgerblue")
+
+        /* ---------- MARCH ---------- */
+
+        var marchMap = new Map();
+        marchMap = {
+            '2019-03-31': 700,
+            '2019-03-30': 100,
+            '2019-03-29': 144923.70861999996,
+            '2019-03-28': 7855.453200000001,
+            '2019-03-27': 659820.3953000001,
+            '2019-03-26': 18986860,
+            '2019-03-25': 9283755.002829999,
+            '2019-03-24': 4424.427020000001,
+            '2019-03-23': 200002323.4869001,
+            '2019-03-22': 10148624.640759999,
+            '2019-03-21': 10675596.373899996,
+            '2019-03-20': 31185463.62984999,
+            '2019-03-19': 117413885.76008,
+            '2019-03-18': 4231117.24839,
+            '2019-03-17': 11293539.730740001,
+            '2019-03-16': 5118893.08904,
+            '2019-03-15': 13068260.38162,
+            '2019-03-14': 1466000.4520100004,
+            '2019-03-13': 409599.67558,
+            '2019-03-12': 13810.55501,
+            '2019-03-11': 1770904.5294000003,
+            '2019-03-10': 3046979.52641,
+            '2019-03-09': 2275048.379149963,
+            '2019-03-08': 6497990.18485,
+            '2019-03-07': 6374783.987429999,
+            '2019-03-06': 9094947.94887,
+            '2019-03-05': 8742493.61292,
+            '2019-03-04': 13360.62612,
+            '2019-03-03': 5933.494429999999,
+            '2019-03-02': 643817.6356,
+            '2019-03-01': 106787.76269
+        }
+
+        //canvas is an SVG file in which the calendar is drawn
+        var canvas = d3.select("body").append("svg")
+            .attr("width", 400)
+            .attr("height", 310)
+
+        //myColor is a pre-made palette from colorbrew that uses d3 data
+        var myColor = d3.scale.quantize()
+            .range(colorbrewer.Blues[9])
+            .domain([0, 10]);
+
+        // !! CREATING THE DATASET
+        //the dataset is an array consisting of all the #s in the map
+        var dataset = [];
+        var date = 1;
+
+        while (date < 32) {
+            var myAmount;
+
+            if (date < 10) {
+                myAmount = marchMap['2019-03-0' + date];
+            } else {
+                myAmount = marchMap['2019-03-' + date];
+            }
+
+            dataset.push(myAmount);
+            date++;
+        }
+
+        //this is coloring the canvas
+        canvas.append("rect")
+            .attr("width", "100%")
+            .attr("height", "100%")
+            .attr("fill", "#F0F0F0");
+
+        //creates rectangles for all #s in the dataset
+        var rectangles = canvas.selectAll(".rectangles")
+            .data(dataset)
+            .enter()
+            .append("rect");
+
+        //xCor/aCor and yCor/bCor track day of week, and # of week
+        //(i.e. June 1st is 6, 0 (Saturday), june 2nd is 0, 1 etc.)
+        //starting off one less than actual because of the way the functions work & return
+        var xCor = 5;
+        var yCor = 0;
+
+        var aCor = 5;
+        var bCor = 0;
+
+        rectangles
+            .attr("x", function (d) {
+                xCor++;
+                if (xCor == 7) {
+                    xCor = 0;
+                    yCor++;
+                }
+                console.log(xCor + " " + yCor)
+                return 15 + (xCor * 50);
+            })
+            .attr("y", function (d) {
+                aCor++;
+                if (aCor == 7) {
+                    aCor = 0;
+                    bCor++;
+                }
+                return 15 + (bCor * 50);
+            })
+            .attr("height", 40)
+            .attr("width", 40)
+            .attr("fill", function (d) {
+                return myColor((d / 1000000) * 10)
+            });
+
+        canvas.append("text")
+            .text("MAR")
+            .attr("x", 15)
+            .attr("y", 45)
+            .attr("fill", "dodgerblue")
+
+        /* ---------- FEBRUARY ---------- */
+
+        var febMap = new Map();
+        febMap = {
+            '2019-02-27': 369605.31381,
+            '2019-02-28': 13860.66832,
+            '2019-02-06': 6945047.07451,
+            '2019-02-20': 5084525.92584,
+            '2019-02-26': 408964.95474,
+            '2019-02-01': 291755.88923,
+            '2019-02-12': 69806.30151,
+            '2019-02-22': 737084.60662,
+            '2019-02-04': 260713.37298,
+            '2019-02-05': 228481.94519,
+            '2019-02-13': 113101.80554,
+            '2019-02-03': 1957939.57835,
+            '2019-02-25': 6183034.38765,
+            '2019-02-15': 28939.37006,
+            '2019-02-19': 362826.41061,
+            '2019-02-18': 10767.21575,
+            '2019-02-21': 1051875.54201,
+            '2019-02-23': 3395.77783,
+            '2019-02-17': 207904.92454,
+            '2019-02-24': 2092299.77486,
+            '2019-02-14': 2799.9989100000003,
+            '2019-02-16': 6955.32293,
+            '2019-02-08': 880077.89556,
+            '2019-02-09': 252737.81592,
+            '2019-02-11': 63928.599780000004,
+            '2019-02-02': 213397.58654,
+            '2019-02-10': 13222.2047,
+            '2019-02-07': 5424016.74982
+        }
+
+        //canvas is an SVG file in which the calendar is drawn
+        var canvas = d3.select("body").append("svg")
+            .attr("width", 400)
+            .attr("height", 310)
+
+        //myColor is a pre-made palette from colorbrew that uses d3 data
+        var myColor = d3.scale.quantize()
+            .range(colorbrewer.Blues[9])
+            .domain([0, 10]);
+
+        // !! CREATING THE DATASET
+        //the dataset is an array consisting of all the #s in the map
+        var dataset = [];
+        var date = 1;
+
+        while (date < 29) {
+            var myAmount;
+
+            if (date < 10) {
+                myAmount = febMap['2019-02-0' + date];
+            } else {
+                myAmount = febMap['2019-02-' + date];
+            }
+
+            dataset.push(myAmount);
+            date++;
+        }
+
+        //this is coloring the canvas
+        canvas.append("rect")
+            .attr("width", "100%")
+            .attr("height", "100%")
+            .attr("fill", "#F0F0F0");
+
+        //creates rectangles for all #s in the dataset
+        var rectangles = canvas.selectAll(".rectangles")
+            .data(dataset)
+            .enter()
+            .append("rect");
+
+        //xCor/aCor and yCor/bCor track day of week, and # of week
+        //(i.e. June 1st is 6, 0 (Saturday), june 2nd is 0, 1 etc.)
+        //starting off one less than actual because of the way the functions work & return
+        var xCor = 5;
+        var yCor = 0;
+
+        var aCor = 5;
+        var bCor = 0;
+
+        rectangles
+            .attr("x", function (d) {
+                xCor++;
+                if (xCor == 7) {
+                    xCor = 0;
+                    yCor++;
+                }
+                console.log(xCor + " " + yCor)
+                return 15 + (xCor * 50);
+            })
+            .attr("y", function (d) {
+                aCor++;
+                if (aCor == 7) {
+                    aCor = 0;
+                    bCor++;
+                }
+                return 15 + (bCor * 50);
+            })
+            .attr("height", 40)
+            .attr("width", 40)
+            .attr("fill", function (d) {
+                return myColor((d / 1000000) * 10)
+            });
+
+        canvas.append("text")
+            .text("FEB")
+            .attr("x", 15)
+            .attr("y", 45)
+            .attr("fill", "dodgerblue")
+
+        /* ---------- JANUARY ---------- */
+
+        var janMap = new Map();
+        janMap = {
+            '2019-01-07': 3161580.15446,
+            '2019-01-20': 427190.8136,
+            '2019-01-04': 34718.82574,
+            '2019-01-29': 1170425.74567,
+            '2019-01-30': 6949.34109,
+            '2019-01-08': 702218.41891,
+            '2019-01-03': 2211744.42584,
+            '2019-01-24': 219705.80761000002,
+            '2019-01-15': 245774.9645,
+            '2019-01-16': 143195.20566,
+            '2019-01-14': 128807.85167999999,
+            '2019-01-11': 94886.87726,
+            '2019-01-17': 15287015.04394,
+            '2019-01-26': 114932.68926,
+            '2019-01-27': 81636.94153,
+            '2019-01-28': 538612.9158399999,
+            '2019-01-31': 126112.2248,
+            '2019-02-01': 130.1728,
+            '2019-01-10': 693784.47277,
+            '2019-01-18': 645405.87543,
+            '2019-01-02': 1568942.6484,
+            '2019-01-21': 52236.26976000002,
+            '2019-01-09': 441228.71913,
+            '2019-01-25': 977334.79517,
+            '2019-01-12': 26853.19858,
+            '2019-01-05': 2429386.45024,
+            '2019-01-06': 409427.98703,
+            '2019-01-23': 474833.13885,
+            '2019-01-13': 62521.53083,
+            '2019-01-22': 402621.45938,
+            '2019-01-19': 6427.9616000000005,
+            '2019-01-01': 2609.62135
+        }
+
+        //canvas is an SVG file in which the calendar is drawn
+        var canvas = d3.select("body").append("svg")
+            .attr("width", 400)
+            .attr("height", 310)
+
+        //myColor is a pre-made palette from colorbrew that uses d3 data
+        var myColor = d3.scale.quantize()
+            .range(colorbrewer.Blues[9])
+            .domain([0, 10]);
+
+        // !! CREATING THE DATASET
+        //the dataset is an array consisting of all the #s in the map
+        var dataset = [];
+        var date = 1;
+
+        while (date < 32) {
+            var myAmount;
+
+            if (date < 10) {
+                myAmount = janMap['2019-01-0' + date];
+            } else {
+                myAmount = janMap['2019-01-' + date];
+            }
+
+            dataset.push(myAmount);
+            date++;
+        }
+
+        //this is coloring the canvas
+        canvas.append("rect")
+            .attr("width", "100%")
+            .attr("height", "100%")
+            .attr("fill", "#F0F0F0");
+
+        //creates rectangles for all #s in the dataset
+        var rectangles = canvas.selectAll(".rectangles")
+            .data(dataset)
+            .enter()
+            .append("rect");
+
+        //xCor/aCor and yCor/bCor track day of week, and # of week
+        //(i.e. June 1st is 6, 0 (Saturday), june 2nd is 0, 1 etc.)
+        //starting off one less than actual because of the way the functions work & return
+        var xCor = 1;
+        var yCor = 0;
+
+        var aCor = 1;
+        var bCor = 0;
+
+        rectangles
+            .attr("x", function (d) {
+                xCor++;
+                if (xCor == 7) {
+                    xCor = 0;
+                    yCor++;
+                }
+                console.log(xCor + " " + yCor)
+                return 15 + (xCor * 50);
+            })
+            .attr("y", function (d) {
+                aCor++;
+                if (aCor == 7) {
+                    aCor = 0;
+                    bCor++;
+                }
+                return 15 + (bCor * 50);
+            })
+            .attr("height", 40)
+            .attr("width", 40)
+            .attr("fill", function (d) {
+                return myColor((d / 1000000) * 10)
+            });
+
+        canvas.append("text")
+            .text("JAN")
+            .attr("x", 15)
+            .attr("y", 45)
+            .attr("fill", "dodgerblue")
+
+    </script>
+</body>
+
+</html>
